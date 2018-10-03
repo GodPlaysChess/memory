@@ -1,0 +1,41 @@
+
+d:/dev/prj/haskell/memory/test\Spec.hs,15
+main main0,1
+
+d:/dev/prj/haskell/memory/src\Lib.hs,42
+module LibLib0,1
+someFunc someFunc4,5
+
+d:/dev/prj/haskell/memory/src\Dialogue.hs,247
+module Dialogue Dialogue1,2
+dialogue dialogue13,14
+addTranslations addTranslations25,26
+readInputTrans readInputTrans31,32
+storePath storePath37,38
+readCards readCards40,41
+readFromFile readFromFile43,44
+randomCard randomCard50,51
+
+d:/dev/prj/haskell/memory/src\data\Translation.hs,209
+module Data.Translation Data.Translation0,1
+data Translation Translation4,5
+data Translation = Translation Translation4,5
+  en en5,6
+  , ru ru6,7
+fromString fromString9,10
+toString toString14,15
+
+d:/dev/prj/haskell/memory/src\data\Card.hs,164
+module Data.Card Data.Card0,1
+data Card Card8,9
+data Card = Card Card8,9
+fromString fromString10,11
+toString toString15,16
+createFresh createFresh18,19
+
+d:/dev/prj/haskell/memory/Setup.hs,15
+main main1,2
+
+d:/dev/prj/haskell/memory/app\Main.hs,37
+module Main Main0,1
+main main4,5

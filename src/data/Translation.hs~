@@ -1,0 +1,16 @@
+
+module Data.Translation where
+
+import           Control.Arrow ((&&&))
+import           Data.Text
+
+data Translation = Translation {
+  en   ::  Text
+  , ru :: Text
+  }
+
+fromString :: String -> Maybe Translation
+fromString str = case split (== ' ') str of
+  e : r : _ -> Just Translation e r
+  _         -> Nothing
+
