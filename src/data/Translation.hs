@@ -8,9 +8,10 @@ data Translation = Translation {
   }
 
 fromString :: String -> Maybe Translation
-fromString str = case words str of
-  e : r : _ -> Just $ Translation e r
-  _         -> Nothing
+fromString _ = Nothing
+-- fromString str = case words str of
+  -- e : r : _ -> Just $ Translation e r
+  -- _         -> Nothing
 
 toString :: Translation -> String
 toString tr = en tr ++ ru tr

@@ -1,4 +1,4 @@
-name:                memory
+nname:                memory
 version:             0.1.0.0
 github:              "githubuser/memory"
 license:             BSD3
@@ -21,6 +21,10 @@ description:         Please see the README on GitHub at <https://github.com/gith
 
 dependencies:
 - base >= 4.7 && < 5
+- text
+- list-t
+- transformers
+- random-shuffle
 
 library:
   source-dirs: src
@@ -46,3 +50,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - memory
+    - hspec >= 2.2.1
+    - hspec-discover

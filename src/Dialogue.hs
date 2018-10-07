@@ -1,33 +1,43 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Dialogue where
+
+module Dialogue(dialogue) where
 
 import           Control.Arrow             ((&&&))
 import           Control.Monad.IO.Class    (liftIO)
 import           Control.Monad.Trans.Class (lift)
-import           Data.Card                 (Card (..), createFresh, fromString,
-                                            toString)
+import           Data.Card                 (Card (..), createFreshCard,
+                                            fromString, toString)
 import           Data.Maybe                (listToMaybe)
 import qualified Data.Translation          as T (Translation (..), fromString)
 import           ListT                     (ListT, fold, fromFoldable, toList)
 import           System.Environment        (getArgs)
 
-dialogue :: IO String
+dialogue :: IO ()
 dialogue = do
   addTranslations
   cards <- readCards
-  let (Card t@(T.Translation en ru) i, rest) = randomCard cards
-  putStrLn (en)
-  guess <- readLn
-  cards1 <- if (guess == ru)
-            then cards ++ [Card t (i + 1)] <$ putStrLn "Correct"
-            else cards ++ [Card t 0] <$ putStrLn "Incorrect"
-  return "exit"
+  putStrLn "Press (:e) to exit"
+  startGame $ shuffle cards
+
+startGame :: [Card] -> IO ()
+startGame [] = putStrLn "You've learnt everything"
+startGame cs@((Card t@(T.Translation en ru) i) : rest) = do
+  putStrLn $ "how to translate" ++ en ++ "?"
+  guess <- getLine
+  if guess == ru
+    then putStrLn "Correct" *> (startGame $ rest ++ [Card t (i + 1)])
+  else if guess == ":e"
+    then putStrLn "ByeBye" *> saveToFile cs
+    else  putStrLn "Incorrect" *> (startGame $ rest ++ [Card t 0])
 
 addTranslations :: IO ()
 addTranslations = do
    new <- fold (\s a -> pure (s ++ "\n" ++ a)) "" $
-     (toString . createFresh) <$> readInputTrans
+     (toString . createFreshCard) <$> readInputTrans
    appendFile storePath new
+
+saveToFile :: [Card] -> IO ()
+saveToFile cards = writeFile storePath . unlines $ toString <$> cards
 
 readInputTrans :: ListT IO T.Translation
 readInputTrans = do
@@ -50,4 +60,7 @@ readFromFile path parse = do
 
 randomCard :: [Card] -> (Card, [Card])
 randomCard =  head &&& tail
+
+shuffle :: [Card] -> [Card]
+shuffle x = x
 

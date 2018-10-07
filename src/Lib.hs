@@ -2,5 +2,7 @@ module Lib
     (   someFunc
     ) where
 
+import Dialogue(dialogue)
+
 someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+someFunc = dialogue
