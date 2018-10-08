@@ -24,11 +24,10 @@ startGame [] = putStrLn "You've learnt everything"
 startGame cs@((Card t@(T.Translation en ru) i) : rest) = do
   putStrLn $ "how to translate" ++ en ++ "?"
   guess <- getLine
-  if guess == ru
-    then putStrLn "Correct" *> (startGame $ rest ++ [Card t (i + 1)])
-  else if guess == ":e"
-    then putStrLn "ByeBye" *> saveToFile cs
-    else  putStrLn "Incorrect" *> (startGame $ rest ++ [Card t 0])
+  case guess of
+    g | g == ru -> putStrLn "Correct" *> (startGame $ rest ++ [Card t (i + 1)])
+      | g == ":e" -> putStrLn "ByeBye" *> saveToFile cs
+      | otherwise -> putStrLn "Incorrect" *> (startGame $ rest ++ [Card t 0])
 
 addTranslations :: IO ()
 addTranslations = do
