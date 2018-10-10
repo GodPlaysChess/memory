@@ -1,10 +1,1 @@
-import           Test.Hspec
-
-import qualified Data.CardSpec
-
-main :: IO ()
-main = hspec spec
-
-spec :: Spec
-spec = do
-  describe "CardSpec"     Data.CardSpec.spec
+{-# OPTIONS_GHC -F -pgmF hspec-discover #-}
