@@ -6,7 +6,7 @@ module Data.Card (Card(..)
 import qualified Data.Translation as T (Translation (..), toString)
 import           Text.Read        (readMaybe)
 
-data Card = Card T.Translation Int
+data Card = Card T.Translation Int deriving (Show, Eq)
 
 fromString :: String -> Maybe Card
 fromString str = case words str of

@@ -2,7 +2,6 @@
 
 module Dialogue(dialogue) where
 
-import           Control.Arrow             ((&&&))
 import           Control.Monad.IO.Class    (liftIO)
 import           Control.Monad.Trans.Class (lift)
 import           Data.Card                 (Card (..), createFreshCard,
@@ -10,14 +9,15 @@ import           Data.Card                 (Card (..), createFreshCard,
 import           Data.Maybe                (listToMaybe)
 import qualified Data.Translation          as T (Translation (..), fromString)
 import           ListT                     (ListT, fold, fromFoldable, toList)
-import           System.Environment        (getArgs)
+import          System.Environment        (getArgs)
+import System.Random.Shuffle(shuffleM)
 
 dialogue :: IO ()
 dialogue = do
   addTranslations
   cards <- readCards
   putStrLn "Press (:e) to exit"
-  startGame $ shuffle cards
+  startGame =<< shuffleM cards
 
 startGame :: [Card] -> IO ()
 startGame [] = putStrLn "You've learnt everything"
@@ -56,10 +56,3 @@ readFromFile path parse = do
   line <- fromFoldable $ lines file
   translation <- fromFoldable . parse $ line
   return translation
-
-randomCard :: [Card] -> (Card, [Card])
-randomCard =  head &&& tail
-
-shuffle :: [Card] -> [Card]
-shuffle x = x
-

@@ -5,7 +5,7 @@ module Data.Translation (Translation (..)
 data Translation = Translation {
   en   ::  String
   , ru :: String
-  }
+  } deriving (Show, Eq)
 
 fromString :: String -> Maybe Translation
 fromString _ = Nothing
