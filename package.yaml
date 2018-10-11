@@ -25,6 +25,7 @@ dependencies:
 - list-t
 - transformers
 - random-shuffle
+- mtl
 
 library:
   source-dirs: src
