@@ -1,7 +1,0 @@
-TODO:
-
-1. Parse file to get translations
-2. Write file with translations and scores (fails/success)
-3. Open file with location argument, so it parses and creates the txt file #2
-4. Continue asking for the input and update the model
-5. Update file after each step, so no changes lost
