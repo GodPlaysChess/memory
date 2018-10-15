@@ -1,10 +1,8 @@
-module Lib
-    (   someFunc
-    ) where
+module Lib(someFunc) where
 
-import Dialogue(dialogue)
-import Control.Monad.Reader(runReaderT)
-import Data.Env(Env(..))
+import           Control.Monad.Reader (runReaderT)
+import           Data.Env             (Env (..))
+import           Dialogue             (dialogue)
 
 someFunc :: IO ()
 someFunc = runReaderT dialogue (Env inputPathE storePathE)
