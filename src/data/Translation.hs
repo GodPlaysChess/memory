@@ -11,14 +11,8 @@ data Translation = Translation {
 
 instance Read Translation where
   readsPrec _ str =  case words str of
-    e : r : rest -> [(Translation e r, unwords rest)]
+    e : r : rest -> [(Translation e r, "")]
     _            -> []
-
-
--- fromString :: String -> Maybe Translation
--- fromString str =  case words str of
---     e : r : _ -> Just $ Translation e r
---     _         -> Nothing
 
 
 toString :: Translation -> String

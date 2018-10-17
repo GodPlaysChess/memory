@@ -11,7 +11,7 @@ data Card = Card T.Translation Int deriving (Show, Eq)
 
 instance Read Card where
   readsPrec _ str =  case words str of
-    e : r : i : rest -> toList $ (\i -> (Card (T.Translation e r) i, unwords rest)) <$> (readMaybe i)
+    e : r : i : rest -> toList $ (\i -> (Card (T.Translation e r) i, "")) <$> (readMaybe i)
     _            -> []
 
 toString :: Card -> String
