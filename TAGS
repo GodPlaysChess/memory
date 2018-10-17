@@ -1,51 +1,0 @@
-
-d:/dev/prj/haskell/memory/test\Spec.hs,0
-
-d:/dev/prj/haskell/memory/test\Data\CardSpec.hs,55
-module Data.CardSpec(Data.CardSpec0,1
-spec spec5,6
-
-d:/dev/prj/haskell/memory/src\Lib.hs,42
-module LibLib0,1
-someFunc someFunc6,7
-
-d:/dev/prj/haskell/memory/src\Game.hs,37
-module Game(Game0,1
-loop loop2,3
-
-d:/dev/prj/haskell/memory/src\Dialogue.hs,326
-module Dialogue(Dialogue2,3
-dialogue dialogue14,15
-startGame startGame21,22
-addTranslations addTranslations31,32
-saveToFile saveToFile37,38
-readInputTrans readInputTrans40,41
-storePath storePath46,47
-readCards readCards49,50
-readFromFile readFromFile52,53
-randomCard randomCard59,60
-shuffle shuffle62,63
-
-d:/dev/prj/haskell/memory/src\Data\Translation.hs,209
-module Data.Translation Data.Translation0,1
-data Translation Translation4,5
-data Translation = Translation Translation4,5
-  en en5,6
-  , ru ru6,7
-fromString fromString9,10
-toString toString15,16
-
-d:/dev/prj/haskell/memory/src\Data\Card.hs,172
-module Data.Card Data.Card0,1
-data Card Card8,9
-data Card = Card Card8,9
-fromString fromString10,11
-toString toString15,16
-createFreshCard createFreshCard18,19
-
-d:/dev/prj/haskell/memory/Setup.hs,15
-main main1,2
-
-d:/dev/prj/haskell/memory/app\Main.hs,37
-module Main Main0,1
-main main4,5
