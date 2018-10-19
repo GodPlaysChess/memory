@@ -1,20 +1,26 @@
 module Data.CardSpec(spec) where
 
-import           Data.Card        (Card (..), toString)
+import           Data.Card        (Card (..), cardParser, toString)
+import           Data.Either      (isLeft)
 import           Data.Translation (Translation (..))
 import           Test.Hspec
+import           Text.Parsec      (parse)
 
 spec :: Spec
 spec = do
-  describe "deserialization of Card" $ do
+  describe "Card Parsers" $ do
     it "should work with space separators" $ do
-      readMaybe "a b 1" `shouldBe` Just  (Card (Translation "a" "b") 1)
+      parse cardParser "test" "a b 1" `shouldBe` succCard
 
     it "should work with multiple space separators" $ do
-      readMaybe "a      b     1 any" `shouldBe` Just  (Card (Translation "a" "b") 1)
+      parse cardParser "test"  "a      b     1 any" `shouldBe` succCard
 
     it "should work with tab separators" $ do
-      readMaybe "a \t\t  b \t\t 1 \t\t ad"  `shouldBe` Just  (Card (Translation "a" "b") 1)
+      parse cardParser "test" "a \t\t  b \t\t 1 \t\t ad"  `shouldBe` succCard
 
     it "should fail if incomplete string" $ do
-      readMaybe "a b" `shouldBe` Nothing
+      parse cardParser "test" "a b" `shouldSatisfy` isLeft
+
+
+succCard = Right (Card (Translation "a" "b") 1)
+

@@ -26,6 +26,7 @@ dependencies:
 - transformers
 - random-shuffle
 - mtl
+- parsec
 
 library:
   source-dirs: src

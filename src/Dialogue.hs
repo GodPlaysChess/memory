@@ -1,17 +1,19 @@
 {-# LANGUAGE OverloadedStrings #-}
 
+
 module Dialogue(dialogue) where
 
 import           Control.Monad.IO.Class    (liftIO)
 import           Control.Monad.Reader      (ReaderT, ask, lift, mapReaderT,
                                             reader, withReaderT)
 import           Control.Monad.Trans.Class (lift)
-import           Data.Card                 (Card (..), createFreshCard,
-                                            toString)
+import           Data.Card                 (Card (..), cardParser,
+                                            createFreshCard, toString)
 import           Data.Env                  (Env (..))
 import qualified Data.Env                  as Env (inputPath, storePath)
 import           Data.Maybe                (listToMaybe)
-import qualified Data.Translation          as T (Translation (..))
+import qualified Data.Translation          as T (Translation (..),
+                                                 translationParser)
 import           Debug.Trace
 import           Io.Util
 import           ListT                     (ListT, fold, fromFoldable, toList)
@@ -61,11 +63,11 @@ saveToFile cards = (reader Env.storePath) >>= (\s ->
 readInputTrans :: ReaderT Env (ListT IO) T.Translation
 readInputTrans = do
   input <- reader Env.inputPath
-  lift $ parseFromFile input-- log that file does not exist
+  lift $ parseFromFile T.translationParser input-- log that file does not exist
 
 
 readCards :: App [Card]
-readCards = (reader Env.storePath) >>= (lift . toList . parseFromFile)
+readCards = (reader Env.storePath) >>= (lift . toList . (parseFromFile cardParser))
 
 
 

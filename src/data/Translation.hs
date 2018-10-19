@@ -1,18 +1,26 @@
 module Data.Translation (Translation (..)
                         , toString
+                        , translationParser
                         ) where
 
-import           GHC.Read
+import           Text.Parsec.Char       (letter)
+import           Text.Parsec.Char       (space)
+import           Text.Parsec.Combinator (many1, skipMany1)
+import           Text.Parsec.String     (Parser)
+
 
 data Translation = Translation {
   en   ::  String
   , ru :: String
   } deriving (Show, Eq)
 
-instance Read Translation where
-  readsPrec _ str =  case words str of
-    e : r : rest -> [(Translation e r, "")]
-    _            -> []
+
+translationParser :: Parser Translation
+translationParser = do
+  en <- many1 letter
+  skipMany1 space
+  ru <- many1 letter
+  return $ Translation en ru
 
 
 toString :: Translation -> String
