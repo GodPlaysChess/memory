@@ -11,16 +11,23 @@ import           Data.Card                 (Card (..), cardParser,
                                             createFreshCard, toString)
 import           Data.Env                  (Env (..))
 import qualified Data.Env                  as Env (inputPath, storePath)
+import           Data.Foldable             (fold, foldMap)
+import           Data.List                 (intercalate)
 import           Data.Maybe                (listToMaybe)
 import qualified Data.Translation          as T (Translation (..),
                                                  translationParser)
 import           Debug.Trace
-import           Io.Util
-import           ListT                     (ListT, fold, fromFoldable, toList)
+
 import           System.Environment        (getArgs)
 import           System.Random.Shuffle     (shuffleM)
 
+import           Text.Parsec               (many)
+import           Text.Parsec.Char          (endOfLine)
+import           Text.Parsec.String        (parseFromFile)
+
+
 type App a = ReaderT Env IO a
+
 
 dialogue :: App ()
 dialogue = do
@@ -29,6 +36,7 @@ dialogue = do
   lift $ putStrLn "Press (:e) to exit"
   shuffledCards <- liftIO $ shuffleM cards
   startGame shuffledCards
+
 
 startGame :: [Card] -> App ()
 startGame [] = lift $ putStrLn "You've learnt everything"
@@ -42,17 +50,13 @@ startGame cs@((Card t@(T.Translation en ru) i) : rest) = do
 
 
 addTranslations :: App ()
-addTranslations = let readerFile = mapReaderT
-                                     (fold (\s a -> pure (s ++ "\n" ++ a)) "")
-                                     (do
-                                         inTranslation <- readInputTrans
---                                         liftIO $ putTraceMsg (show inTranslation) -- debug
-                                         return $ (toString . createFreshCard) $ trace (show inTranslation) inTranslation )
-                  in
-                    do
-                      content <- readerFile
-                      out <- reader Env.storePath
-                      lift $ appendFile out content
+addTranslations = do
+  ts <- readTranslation
+  liftIO $ putStrLn $ "Debug: " ++ show ts
+  let cs = (toString . createFreshCard) <$> ts
+      content = intercalate "\n" cs
+  out <- reader Env.storePath
+  lift $ appendFile out content
 
 
 saveToFile :: [Card] -> App ()
@@ -60,14 +64,12 @@ saveToFile cards = (reader Env.storePath) >>= (\s ->
                      lift . writeFile s . unlines $ toString <$> cards)
 
 
-readInputTrans :: ReaderT Env (ListT IO) T.Translation
-readInputTrans = do
-  input <- reader Env.inputPath
-  lift $ parseFromFile T.translationParser input-- log that file does not exist
+readTranslation :: App [T.Translation]
+readTranslation = lift . (fmap fold) . parseFromFile (many (T.translationParser <* endOfLine)) =<<
+             (reader Env.inputPath)
 
 
 readCards :: App [Card]
-readCards = (reader Env.storePath) >>= (lift . toList . (parseFromFile cardParser))
-
-
+readCards = lift . (fmap fold) . parseFromFile (many (cardParser <* endOfLine)) =<<
+             (reader Env.storePath)
 

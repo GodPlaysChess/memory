@@ -7,9 +7,11 @@ import           Dialogue             (dialogue)
 someFunc :: IO ()
 someFunc = runReaderT dialogue (Env inputPathE storePathE)
 
+
 storePathE :: FilePath
 storePathE = "./store/words"
 
+
 inputPathE :: FilePath
-inputPathE = "./store/in.txt"
+inputPathE = "./store/input"
 
