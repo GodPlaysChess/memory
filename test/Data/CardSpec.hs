@@ -1,10 +1,11 @@
 module Data.CardSpec(spec) where
 
 import           Data.Card        (Card (..), cardParser, toString)
-import           Data.Either      (isLeft)
-import           Data.Translation (Translation (..))
+import           Data.Either      (isLeft, isRight)
+import           Data.Translation (Translation (..), translationParser)
 import           Test.Hspec
 import           Text.Parsec      (parse)
+import           Text.Parsec.Char (endOfLine, newline)
 
 spec :: Spec
 spec = do

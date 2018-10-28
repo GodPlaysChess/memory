@@ -27,6 +27,9 @@ dependencies:
 - random-shuffle
 - mtl
 - parsec
+- bytestring
+- utf8-string
+- unicode-show
 
 library:
   source-dirs: src

@@ -14,12 +14,8 @@ import           Text.Parsec.String     (Parser)
 
 import           Text.Read              (read, readMaybe)
 
-data Card = Card T.Translation Int deriving (Show, Eq)
 
-instance Read Card where
-  readsPrec _ str =  case words str of
-    e : r : i : rest -> toList $ (\i -> (Card (T.Translation e r) i, "")) <$> (readMaybe i)
-    _            -> []
+data Card = Card T.Translation Int deriving (Show, Eq)
 
 
 cardParser :: Parser Card
@@ -32,6 +28,7 @@ cardParser = do
 
 toString :: Card -> String
 toString (Card t i) = T.toString t ++ show i
+
 
 createFreshCard :: T.Translation -> Card
 createFreshCard t = Card t 0
