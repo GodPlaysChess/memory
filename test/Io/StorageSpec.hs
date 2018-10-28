@@ -18,11 +18,10 @@ spec = do
 
 
     it "should parse the unicode file" $ do
-      runUnicodeTest readTranslation `shouldReturn` [Translation "a" "b"]
+      runUnicodeTest readTranslation `shouldReturn` [Translation "bleak" "мрачный", Translation "slouch" "сутулый"]
 
     it "should append correct date to the output" $ do
       pending
-
 
 
 runUnicodeTest m = runReaderT m (Env testUnicodeInput testOutput)

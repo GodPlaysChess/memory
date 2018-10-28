@@ -1,11 +1,12 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Data.CardSpec(spec) where
 
 import           Data.Card        (Card (..), cardParser, toString)
 import           Data.Either      (isLeft, isRight)
 import           Data.Translation (Translation (..), translationParser)
 import           Test.Hspec
-import           Text.Parsec      (parse)
-import           Text.Parsec.Char (endOfLine, newline)
+import           Text.Megaparsec  (parse)
 
 spec :: Spec
 spec = do

@@ -3,11 +3,10 @@ module Data.Translation (Translation (..)
                         , translationParser
                         ) where
 
-import           Text.Parsec.Char       (letter)
-import           Text.Parsec.Char       (space)
-import           Text.Parsec.Combinator (many1, skipMany1)
-import           Text.Parsec.String     (Parser)
-
+import           Data.Text            (Text)
+import           Data.Void
+import           Text.Megaparsec
+import           Text.Megaparsec.Char (letterChar, spaceChar)
 
 data Translation = Translation {
   en   ::  String
@@ -15,11 +14,11 @@ data Translation = Translation {
   } deriving (Show, Eq)
 
 
-translationParser :: Parser Translation
+translationParser :: Parsec Void Text Translation
 translationParser = do
-  en <- many1 letter
-  skipMany1 space
-  ru <- many1 letter
+  en <- some letterChar
+  skipSome spaceChar
+  ru <- some letterChar
   return $ Translation en ru
 
 

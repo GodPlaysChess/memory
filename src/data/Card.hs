@@ -4,25 +4,22 @@ module Data.Card (Card(..)
                  , cardParser
                  ) where
 
-import           Control.Arrow          (first)
-import           Data.Foldable          (toList)
-import qualified Data.Translation       as T (Translation (..), toString,
-                                              translationParser)
-import           Text.Parsec.Char       (digit, space)
-import           Text.Parsec.Combinator (many1, skipMany1)
-import           Text.Parsec.String     (Parser)
-
-import           Text.Read              (read, readMaybe)
+import           Data.Text            (Text)
+import qualified Data.Translation     as T (Translation (..), toString,
+                                            translationParser)
+import           Data.Void
+import           Text.Megaparsec      (Parsec, skipSome, some)
+import           Text.Megaparsec.Char (digitChar, spaceChar)
 
 
 data Card = Card T.Translation Int deriving (Show, Eq)
 
 
-cardParser :: Parser Card
+cardParser :: Parsec Void Text Card
 cardParser = do
   tr <- T.translationParser
-  skipMany1 space
-  i <- many1 digit
+  skipSome spaceChar
+  i <- some digitChar
   return $ Card tr (read i)
 
 

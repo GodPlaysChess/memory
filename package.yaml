@@ -26,10 +26,13 @@ dependencies:
 - transformers
 - random-shuffle
 - mtl
-- parsec
+- megaparsec >= 7.0.1
+- parser-combinators
 - bytestring
 - utf8-string
 - unicode-show
+- void
+- path-text-utf8 >= 0.0.1.1
 
 library:
   source-dirs: src
