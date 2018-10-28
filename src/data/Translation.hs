@@ -23,4 +23,4 @@ translationParser = do
 
 
 toString :: Translation -> String
-toString tr = en tr ++ ru tr
+toString tr = en tr ++ "    " ++ ru tr

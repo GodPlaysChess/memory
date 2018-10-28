@@ -21,12 +21,12 @@ spec = do
       runUnicodeTest readTranslation `shouldReturn` [Translation "bleak" "мрачный", Translation "slouch" "сутулый"]
 
     it "should append correct date to the output" $ do
-      pending
+      runUnicodeTest (saveToFile [Card (Translation "bleak" "мрачный") 1] >> readCards)
+         `shouldReturn` [Card (Translation "bleak" "мрачный") 1]
 
 
 runUnicodeTest m = runReaderT m (Env testUnicodeInput testOutput)
 runEngTest m = runReaderT m (Env testEngInput testOutput)
-
 
 
 testEngInput     = "d:\\dev\\prj\\haskell\\memory\\test\\resources\\test-eng"

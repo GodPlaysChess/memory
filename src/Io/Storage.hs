@@ -17,9 +17,9 @@ import           Data.Foldable          (fold)
 import           Data.List              (intercalate)
 
 import           Control.Monad.IO.Class (liftIO)
-import qualified Data.ByteString.Char8  as BS (readFile)
-import           Data.Text              (Text)
-import           Data.Text.Encoding     (decodeUtf8)
+import qualified Data.ByteString.Char8  as BS (pack, readFile, writeFile)
+import           Data.Text              (Text, pack)
+import           Data.Text.Encoding     (decodeUtf8, encodeUtf8)
 import qualified Data.Translation       as T (Translation (..),
                                               translationParser)
 import           Text.Megaparsec        (parseMaybe, sepEndBy)
@@ -30,7 +30,7 @@ type App a = ReaderT Env IO a
 
 saveToFile :: [Card] -> App ()
 saveToFile cards = (reader storePath) >>= (\s ->
-                     lift . writeFile s . unlines $ toString <$> cards)
+                     liftIO . BS.writeFile s . encodeUtf8 . pack . unlines $ toString <$> cards)
 
 
 readTranslation :: App [T.Translation]
@@ -43,7 +43,7 @@ readTranslation = do
 
 readCards :: App [Card]
 readCards = do
-  inputP <- reader inputPath
+  inputP <- reader storePath
   content <- liftIO $ readFileUtf8 inputP
   return $ fold $ parseMaybe (cardParser `sepEndBy` eol) content
 

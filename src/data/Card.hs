@@ -24,7 +24,7 @@ cardParser = do
 
 
 toString :: Card -> String
-toString (Card t i) = T.toString t ++ show i
+toString (Card t i) = T.toString t ++ "    " ++ show i
 
 
 createFreshCard :: T.Translation -> Card
